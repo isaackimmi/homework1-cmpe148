@@ -42,11 +42,14 @@ def main():
     CLIENT_FILE = 'client_secret.json'
     SCOPES = ['https://mail.google.com/']
 
+    # user credentials used for Oath2
     creds = None
 
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
 
+    # if the user credentials are invalid, or if this is the first time
+    # a user is registering in the app:
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
@@ -58,6 +61,7 @@ def main():
             token.write(creds.to_json())
 
     try:
+        # send a mock email to my own (Isaac's email address)
         message = send_email(creds)
         if message is None:
             print("Error sending the email.")
