@@ -45,7 +45,7 @@ def main():
     creds = None
 
     if os.path.exists('token.json'):
-        credit = Credentials.from_authorized_user_file('token.json', SCOPES)
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
 
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
